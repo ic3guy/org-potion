@@ -35,7 +35,8 @@
         (find-file draft-file)
       (find-file draft-file)
       (insert (format jekyll-post-template title))
-      (org-todo "DRAFT")
-      (org-set-property "EXPORT_FILE_NAME" (jekyll-make-slug title)))))
+      (org-todo "DRAFT"))))
+
+;;      (org-set-property "EXPORT_FILE_NAME" (jekyll-make-slug title)))))
 
 (provide 'jekyll-settings)
