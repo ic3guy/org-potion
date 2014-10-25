@@ -4,7 +4,7 @@
 (defvar jekyll-directory "~/Devel/ic3guy.github.io/" "Path to Jekyll blog. Must end in /")
 (defvar jekyll-drafts-dir "_drafts/" "Relative path to drafts directory.")
 (defvar jekyll-posts-dir "_posts/" "Relative path to posts directory.")
-(defvar jekyll-post-ext ".md"  "File extension of Jekyll posts.")
+;;(defvar jekyll-post-ext ".md"  "File extension of Jekyll posts.")
 ;;(defvar jekyll-post-template "#+BEGIN_HTML\n---\nlayout: post\ntitle: %s\ntags:\ndate: \n---\n#+END_HTML\n" "Default template for Jekyll posts. %s will be replace by the post title.")
 
 ;; (defvar jekyll-post-template "#+SEQ_TODO: DRAFT | DONE\n* %s")
@@ -17,6 +17,8 @@
              (sequence "DRAFT" "|" "PUBLISH")))
 
 (setq org-todo-keyword-faces '(("PUBLISH" . (:background "green" :foreground "black" :weight bold))))
+
+(setq org-log-done 'time)
 
 (defun jekyll-yaml-escape (s) "Escape a string for YAML."
        (if (or (string-match ":" s) (string-match "\"" s)) (concat "\"" (replace-regexp-in-string "\"" "\\\\\"" s) "\"") s))
