@@ -46,15 +46,21 @@
 
 (add-hook 'org-trigger-hook 'org-potion-quaff)
 
+(defun org-potion-post-header (title)
+  (format "---\nlayout: post\ntitle: %s\n---\n" (jekyll-yaml-escape title)))
+
 (defun org-potion-quaff (vals)
-  (let ((heading (nth 4 (org-heading-components))))
-    (when (string-equal (plist-get vals :to) "PUBLISH")
-      (org-export-to-file 'md (concat jekyll-directory jekyll-posts-dir
+  (let* ((heading (nth 4 (org-heading-components)))
+	 (file-path (concat jekyll-directory jekyll-posts-dir
 				      (format-time-string "%Y-%m-%d-")
-				      (jekyll-make-slug heading) ".md") nil t nil nil nil
-				      (lambda (file) (set-buffer (find-file-noselect file)
-					(goto-char (point-min))
-					(insert "billy"))))))
+				      (jekyll-make-slug heading) ".md")))
+    (when (string-equal (plist-get vals :to) "PUBLISH")
+      (org-export-to-file 'md file-path nil t)
+      (set-buffer (find-file-noselect file-path))
+      (goto-char (point-min))
+      (insert (org-potion-post-header heading))
+      (save-buffer)
+      (kill-buffer))))
 
 (defun org-potion-bottle (heading)
   (interactive)
