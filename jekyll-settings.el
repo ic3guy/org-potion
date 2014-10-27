@@ -55,7 +55,7 @@
 				      (format-time-string "%Y-%m-%d-")
 				      (jekyll-make-slug heading) ".md")))
     (when (string-equal (plist-get vals :to) "PUBLISH")
-      (org-export-to-file 'md file-path nil t)
+      (org-export-to-file 'gfm file-path nil t)
       (set-buffer (find-file-noselect file-path))
       (goto-char (point-min))
       (insert (org-potion-post-header heading))
