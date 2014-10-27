@@ -8,7 +8,11 @@
 ;;(defvar jekyll-post-template "#+BEGIN_HTML\n---\nlayout: post\ntitle: %s\ntags:\ndate: \n---\n#+END_HTML\n" "Default template for Jekyll posts. %s will be replace by the post title.")
 
 ;; (defvar jekyll-post-template "#+SEQ_TODO: DRAFT | DONE\n* %s")
-(defvar jekyll-post-template "#+TODO: DRAFT PUBLISH\n#+STARTUP: logdone\n* %s")
+(defvar jekyll-post-template
+  "#+TODO: DRAFT PUBLISH
+#+OPTIONS: toc:nil
+#+STARTUP: logdone
+* %s")
 
 (defvar jekyll-post-ext ".org"  "File extension of Jekyll posts.")
 
@@ -43,11 +47,10 @@
 
 (defun org-potion-publish-name (vals)
   (if (string-equal (plist-get vals :to) "PUBLISH")
-      (org-set-property "EXPORT_FILE_NAME"
-			(concat 
-			 (format-time-string "%Y-%m-%d-")
-			 (jekyll-make-slug (nth 4 (org-heading-components)))))))
-
+      (org-export-to-file 'md (concat jekyll-directory jekyll-posts-dir
+				      (format-time-string "%Y-%m-%d-")
+				      (jekyll-make-slug (nth 4 (org-heading-components))) ".md")
+	nil)))
   
   ;; (print (plist-get vals :to))
   ;; (print (format-time-string "Today is %Y-%m-%d")))
