@@ -40,4 +40,10 @@
  
 ;;      (org-set-property "EXPORT_FILE_NAME" (jekyll-make-slug title)))))
 
+(add-hook 'org-trigger-hook 'org-potion-publish-name)
+
+(defun org-potion-publish-name (vals)
+  (message (plist-get vals :from)))
+
+
 (provide 'jekyll-settings)
