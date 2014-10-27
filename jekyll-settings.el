@@ -46,11 +46,12 @@
 (add-hook 'org-trigger-hook 'org-potion-publish-name)
 
 (defun org-potion-publish-name (vals)
-  (if (string-equal (plist-get vals :to) "PUBLISH")
-      (org-export-to-file 'md (concat jekyll-directory jekyll-posts-dir
-				      (format-time-string "%Y-%m-%d-")
-				      (jekyll-make-slug (nth 4 (org-heading-components))) ".md")
-	nil)))
+  (when (string-equal (plist-get vals :to) "PUBLISH")
+    (org-narrow-to-subtree)
+    (org-export-to-file 'md (concat jekyll-directory jekyll-posts-dir
+				    (format-time-string "%Y-%m-%d-")
+				    (jekyll-make-slug (nth 4 (org-heading-components))) ".md") nil)
+    (widen)))
   
   ;; (print (plist-get vals :to))
   ;; (print (format-time-string "Today is %Y-%m-%d")))
