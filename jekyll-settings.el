@@ -12,13 +12,13 @@
 
 (defvar jekyll-post-ext ".org"  "File extension of Jekyll posts.")
 
-(setq org-todo-keywords
-           '((sequence "TODO" "|" "DONE")
-             (sequence "DRAFT" "|" "PUBLISH")))
+;; (setq org-todo-keywords
+;;            '((sequence "TODO" "|" "DONE")
+;;              (sequence "DRAFT" "|" "PUBLISH")))
 
 (setq org-todo-keyword-faces '(("PUBLISH" . (:background "green" :foreground "black" :weight bold))))
 
-(setq org-log-done 'time)
+;; (setq org-log-done 'time)		
 
 (defun jekyll-yaml-escape (s) "Escape a string for YAML."
        (if (or (string-match ":" s) (string-match "\"" s)) (concat "\"" (replace-regexp-in-string "\"" "\\\\\"" s) "\"") s))
