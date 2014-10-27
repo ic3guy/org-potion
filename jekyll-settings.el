@@ -44,16 +44,23 @@
       (org-mode-restart)
       (org-todo "DRAFT"))))
 
-(add-hook 'org-trigger-hook 'org-potion-publish-name)
+(add-hook 'org-trigger-hook 'org-potion-quaff)
 
 (defun org-potion-quaff (vals)
-  (when (string-equal (plist-get vals :to) "PUBLISH")
-    (org-narrow-to-subtree)
-    (org-export-to-file 'md (concat jekyll-directory jekyll-posts-dir
-				    (format-time-string "%Y-%m-%d-")
-				    (jekyll-make-slug (nth 4 (org-heading-components))) ".md") nil)
-    (widen)))
-  
+  (let ((heading (nth 4 (org-heading-components))))
+    (when (string-equal (plist-get vals :to) "PUBLISH")
+      (org-export-to-file 'md (concat jekyll-directory jekyll-posts-dir
+				      (format-time-string "%Y-%m-%d-")
+				      (jekyll-make-slug heading) ".md") nil t nil nil nil
+				      (lambda (file) (set-buffer (find-file-noselect file)
+					(goto-char (point-min))
+					(insert "billy"))))))
+
+(defun org-potion-bottle (heading)
+  (interactive)
+  (goto-char (point-min))
+  (insert heading))
+
   ;; (print (plist-get vals :to))
   ;; (print (format-time-string "Today is %Y-%m-%d")))
 
