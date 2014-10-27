@@ -38,12 +38,19 @@
       (org-mode-restart)
       (org-todo "DRAFT"))))
  
-;;      (org-set-property "EXPORT_FILE_NAME" (jekyll-make-slug title)))))
 
 (add-hook 'org-trigger-hook 'org-potion-publish-name)
 
 (defun org-potion-publish-name (vals)
-  (message (plist-get vals :from)))
+  (if (string-equal (plist-get vals :to) "PUBLISH")
+      (org-set-property "EXPORT_FILE_NAME"
+			(concat 
+			 (format-time-string "%Y-%m-%d-")
+			 (jekyll-make-slug (nth 4 (org-heading-components)))))))
+
+  
+  ;; (print (plist-get vals :to))
+  ;; (print (format-time-string "Today is %Y-%m-%d")))
 
 
 (provide 'jekyll-settings)
