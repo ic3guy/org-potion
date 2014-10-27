@@ -8,7 +8,7 @@
 ;;(defvar jekyll-post-template "#+BEGIN_HTML\n---\nlayout: post\ntitle: %s\ntags:\ndate: \n---\n#+END_HTML\n" "Default template for Jekyll posts. %s will be replace by the post title.")
 
 ;; (defvar jekyll-post-template "#+SEQ_TODO: DRAFT | DONE\n* %s")
-(defvar jekyll-post-template "* %s")
+(defvar jekyll-post-template "#+TODO: DRAFT PUBLISH\n#+STARTUP: logdone\n* %s")
 
 (defvar jekyll-post-ext ".org"  "File extension of Jekyll posts.")
 
@@ -35,6 +35,7 @@
         (find-file draft-file)
       (find-file draft-file)
       (insert (format jekyll-post-template title))
+      (org-mode-restart)
       (org-todo "DRAFT"))))
  
 ;;      (org-set-property "EXPORT_FILE_NAME" (jekyll-make-slug title)))))

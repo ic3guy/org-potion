@@ -1,3 +1,0 @@
-#+TODO: DRAFT PUBLISH
-#+STARTUP: logdone
-
