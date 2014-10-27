@@ -10,7 +10,7 @@
 ;; (defvar jekyll-post-template "#+SEQ_TODO: DRAFT | DONE\n* %s")
 (defvar jekyll-post-template
   "#+TODO: DRAFT PUBLISH
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:nil todo:nil
 #+STARTUP: logdone
 * %s")
 
