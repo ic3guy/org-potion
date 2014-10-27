@@ -62,10 +62,10 @@
       (save-buffer)
       (kill-buffer))))
 
-(defun org-potion-bottle (heading)
-  (interactive)
-  (goto-char (point-min))
-  (insert heading))
+;; (defun org-potion-bottle (heading)
+;;   (interactive)
+;;   (goto-char (point-min))
+;;   (insert heading))
 
   ;; (print (plist-get vals :to))
   ;; (print (format-time-string "Today is %Y-%m-%d")))
