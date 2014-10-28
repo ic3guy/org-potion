@@ -31,6 +31,12 @@
 
 ;; (setq org-log-done 'time)		
 
+(setq org-agenda-custom-commands
+      '(("J" "Jekyll Posts" todo "DRAFT|PUBLISH"
+	 ((org-agenda-files (file-expand-wildcards (concat jekyll-directory jekyll-drafts-dir "*.org")))
+	  (org-agenda-sorting-strategy '(todo-state-down))))))
+
+
 (defun jekyll-yaml-escape (s) "Escape a string for YAML."
        (if (or (string-match ":" s) (string-match "\"" s)) (concat "\"" (replace-regexp-in-string "\"" "\\\\\"" s) "\"") s))
 
