@@ -1,5 +1,12 @@
 ;; Inspired by https://github.com/wdenton/.emacs.d/blob/master/setup/setup-jekyll.el
-;; 
+;;
+
+;;(require 'ox-md)
+;;(require 'ox)
+
+(add-to-list 'load-path "~/Devel/org-potion")
+(require 'org-install)
+(require 'ox-gfm)
 
 (defvar jekyll-directory "~/Devel/ic3guy.github.io/" "Path to Jekyll blog. Must end in /")
 (defvar jekyll-drafts-dir "_drafts/" "Relative path to drafts directory.")
@@ -69,6 +76,5 @@
 
   ;; (print (plist-get vals :to))
   ;; (print (format-time-string "Today is %Y-%m-%d")))
-
 
 (provide 'jekyll-settings)
