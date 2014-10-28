@@ -77,4 +77,4 @@
   ;; (print (plist-get vals :to))
   ;; (print (format-time-string "Today is %Y-%m-%d")))
 
-(provide 'jekyll-settings)
+(provide 'org-potion)
