@@ -17,7 +17,7 @@
 
 ;; (defvar jekyll-post-template "#+SEQ_TODO: DRAFT | DONE\n* %s")
 (defvar jekyll-post-template
-  "#+TODO: DRAFT PUBLISH
+  "#+TODO: DRAFT PUBLISHED
 #+OPTIONS: toc:nil todo:nil
 #+STARTUP: logdone
 * %s")
@@ -28,12 +28,12 @@
 ;;            '((sequence "TODO" "|" "DONE")
 ;;              (sequence "DRAFT" "|" "PUBLISH")))
 
-(setq org-todo-keyword-faces '(("PUBLISH" . (:background "green" :foreground "black" :weight bold))))
+(setq org-todo-keyword-faces '(("PUBLISHED" . (:background "green" :foreground "black" :weight bold))))
 
 ;; (setq org-log-done 'time)		
 
 (setq org-agenda-custom-commands
-      '(("J" "Jekyll Posts" todo "DRAFT|PUBLISH"
+      '(("J" "Jekyll Posts" todo "DRAFT|PUBLISHED"
 	 ((org-agenda-files (file-expand-wildcards (concat jekyll-directory jekyll-drafts-dir "*.org")))
 	  (org-agenda-sorting-strategy '(todo-state-down))))))
 
@@ -68,7 +68,7 @@
 	 (file-path (concat jekyll-directory jekyll-posts-dir
 				      (format-time-string "%Y-%m-%d-")
 				      (jekyll-make-slug heading) ".md")))
-    (cond ((string-equal (plist-get vals :to) "PUBLISH")
+    (cond ((string-equal (plist-get vals :to) "PUBLISHED")
 	   (org-set-property "initial_publish_date" (format-time-string "%Y-%m-%d"))
 	   (org-export-to-file 'gfm file-path nil t)
 	   (set-buffer (find-file-noselect file-path))
@@ -77,7 +77,7 @@
 	   (save-buffer)
 	   (kill-buffer))
 	  ((and (string-equal (plist-get vals :to) "DRAFT")
-	       (string-equal (plist-get vals :from) "PUBLISH"))
+	       (string-equal (plist-get vals :from) "PUBLISHED"))
 	  (org-set-property "modified" (format-time-string "%Y-%m-%d"))))))
 	       
 
