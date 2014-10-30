@@ -7,6 +7,7 @@
 (add-to-list 'load-path "~/Devel/org-potion")
 (require 'org-install)
 (require 'ox-gfm)
+(require 'cl)
 
 (defvar jekyll-directory "~/Devel/ic3guy.github.io/" "Path to Jekyll blog. Must end in /")
 (defvar jekyll-drafts-dir "_drafts/" "Relative path to drafts directory.")
@@ -67,13 +68,18 @@
 	 (file-path (concat jekyll-directory jekyll-posts-dir
 				      (format-time-string "%Y-%m-%d-")
 				      (jekyll-make-slug heading) ".md")))
-    (when (string-equal (plist-get vals :to) "PUBLISH")
-      (org-export-to-file 'gfm file-path nil t)
-      (set-buffer (find-file-noselect file-path))
-      (goto-char (point-min))
-      (insert (org-potion-post-header heading))
-      (save-buffer)
-      (kill-buffer))))
+    (cond ((string-equal (plist-get vals :to) "PUBLISH")
+	   (org-set-property "initial_publish_date" (format-time-string "%Y-%m-%d"))
+	   (org-export-to-file 'gfm file-path nil t)
+	   (set-buffer (find-file-noselect file-path))
+	   (goto-char (point-min))
+	   (insert (org-potion-post-header heading))
+	   (save-buffer)
+	   (kill-buffer))
+	  ((and (string-equal (plist-get vals :to) "DRAFT")
+	       (string-equal (plist-get vals :from) "PUBLISH"))
+	  (org-set-property "modified" (format-time-string "%Y-%m-%d"))))))
+	       
 
 ;; (defun org-potion-bottle (heading)
 ;;   (interactive)
