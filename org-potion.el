@@ -46,7 +46,7 @@
 (defun jekyll-make-slug (s) "Turn a string into a slug."
        (replace-regexp-in-string " " "-"  (downcase (replace-regexp-in-string "[^A-Za-z0-9 ]" "" s))))
 
-(defun org-potion-create-vessel (title) "Create a new org file to hold draft blog posts."
+(defun org-potion-create-post (title) "Create a new org file to hold draft blog posts."
   (interactive "sOrg File Title: ")
   (let ((draft-file (concat jekyll-directory jekyll-drafts-dir
                             (jekyll-make-slug title)
@@ -59,6 +59,9 @@
       (org-todo "DRAFT"))))
 
 (add-hook 'org-trigger-hook 'org-potion-quaff)
+
+;; add function for static
+
 
 (defun org-potion-post-header (title)
   (format "---\nlayout: post\ntitle: %s\n---\n" (jekyll-yaml-escape title)))
