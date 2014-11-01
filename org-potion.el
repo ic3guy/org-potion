@@ -22,6 +22,10 @@
 #+STARTUP: logdone
 * %s")
 
+;; (defvar jekyll-static-page-template
+;;   "#+OPTIONS: toc:nil todo:nil
+;; * %s")
+
 (defvar jekyll-post-ext ".org"  "File extension of Jekyll posts.")
 
 ;; (setq org-todo-keywords
@@ -58,10 +62,24 @@
       (org-mode-restart)
       (org-todo "DRAFT"))))
 
+(defun org-potion-create-static-page (title)
+  (interactive "sStatic Page Title: " )
+  (let ((draft-file (concat jekyll-directory
+                            (jekyll-make-slug title)
+                            jekyll-post-ext)))
+    (if (file-exists-p draft-file)
+        (find-file draft-file)
+      (find-file draft-file)
+      (insert (format jekyll-static-page-template title))
+      (org-mode-restart)
+      (org-todo "DRAFT"))))
+
+
 (add-hook 'org-trigger-hook 'org-potion-quaff)
 
-;; add function for static
-
+;; ;; add function for static
+;; (defun org-potion-static-page-header (title)
+;;   (format "---\nlayout: page\ntitle: %s\n---\n" (jekyll-yaml-escape title)))
 
 (defun org-potion-post-header (title)
   (format "---\nlayout: post\ntitle: %s\n---\n" (jekyll-yaml-escape title)))
@@ -80,7 +98,7 @@
 	   (save-buffer)
 	   (kill-buffer))
 	  ((and (string-equal (plist-get vals :to) "DRAFT")
-	       (string-equal (plist-get vals :from) "PUBLISHED"))
+		(string-equal (plist-get vals :from) "PUBLISHED"))
 	  (org-set-property "modified" (format-time-string "%Y-%m-%d"))))))
 	       
 
