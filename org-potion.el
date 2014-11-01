@@ -12,6 +12,8 @@
 (defvar jekyll-directory "~/Devel/ic3guy.github.io/" "Path to Jekyll blog. Must end in /")
 (defvar jekyll-drafts-dir "_drafts/" "Relative path to drafts directory.")
 (defvar jekyll-posts-dir "_posts/" "Relative path to posts directory.")
+(defvar jekyll-images-dir "images/")
+
 ;;(defvar jekyll-post-ext ".md"  "File extension of Jekyll posts.")
 ;;(defvar jekyll-post-template "#+BEGIN_HTML\n---\nlayout: post\ntitle: %s\ntags:\ndate: \n---\n#+END_HTML\n" "Default template for Jekyll posts. %s will be replace by the post title.")
 
@@ -101,6 +103,15 @@
 		(string-equal (plist-get vals :from) "PUBLISHED"))
 	  (org-set-property "modified" (format-time-string "%Y-%m-%d"))))))
 	       
+(defun org-potion-insert-image ()
+  (interactive)
+  (let* ((filepath (ido-read-file-name "Path to image: "))
+	 (image-dir (concat jekyll-directory jekyll-images-dir))
+	 (filename (file-name-nondirectory filepath)))
+    (message filepath)
+    (copy-file filepath (concat image-dir filename))
+    (insert (format "[[file:../images/%s]]" filename)))) 
+  
 
 ;; (defun org-potion-bottle (heading)
 ;;   (interactive)
