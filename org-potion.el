@@ -101,7 +101,10 @@
 	   (kill-buffer))
 	  ((and (string-equal (plist-get vals :to) "DRAFT")
 		(string-equal (plist-get vals :from) "PUBLISHED"))
-	  (org-set-property "modified" (format-time-string "%Y-%m-%d"))))))
+	   (delete-file (concat jekyll-directory jekyll-posts-dir
+				(cdr (assoc "initial_publish_date" (org-entry-properties)))
+				"-" (jekyll-make-slug heading) ".md")))
+	   (org-set-property "modified" (format-time-string "%Y-%m-%d")))))
 	       
 (defun org-potion-insert-image ()
   (interactive)
