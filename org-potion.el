@@ -4,7 +4,6 @@
 ;;(require 'ox-md)
 ;;(require 'ox)
 
-(add-to-list 'load-path "~/Devel/org-potion")
 (require 'org-install)
 (require 'ox-gfm)
 (require 'cl)
